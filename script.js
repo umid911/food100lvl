@@ -31,8 +31,7 @@ const product = {
     }
 }
 
-const /* productBtns = document.querySelectorAll('.receipt'), */
-    basketBtn = document.querySelector('.addCart'),
+const basketBtn = document.querySelector('.addCart'),
     basketModal = document.querySelector('.receipt'),
     basketClaseModal = document.querySelector('.receipt__window-btn')
 
@@ -53,49 +52,51 @@ basketClaseModal.addEventListener('click', () => {
     `
 })
 
-const headerTimer = document.querySelector('.header__timer-extra')
-let i = 0    
+const icon = document.querySelector('.header__timer-extra')
+
+let count = 50
 
 
-function timerLogo(speed = 0) {        
-    if(headerTimer.innerHTML <= 99) {        
-        i++ 
-        headerTimer.innerHTML = i
-        setTimeout(() => {
-            timerLogo()
-        }, 1000);   
-    }else {
-        i == 100
+function timerLogo(speed = 0) {
+    icon.innerHTML = speed
+    speed++
 
-        
-        headerTimer.innerHTML = i
+    if (speed > 50 && speed < 100) {
+
+        count = 150
     }
-    setTimeout(() => {
-        timerLogo()
-    }, 100);
-    
+    if (speed <= 100) {
+        setTimeout(() => {
+            timerLogo(speed)
+        }, count);
+    }
+
 
 }
-
 timerLogo()
 
 
-function totalSum(){
-    let total = 0 
-    for(const key in product){
+
+
+function totalSum() {
+    let total = 0
+    for (const key in product) {
         total += product[key].totalSum
     }
     return total
 }
 
 window.addEventListener('click', (e) => {
-    if(e.target.classList.contains('class="main__product-btn"')){
-        const atte = e.target.getAtteibute('data-symbol') 
-        const parent = e.target.closest('main__product-num')
-        if(parent){
-            const idProduct = parent.getAtteibute('id').split('_')[0]
-            if(attr == '-') product[idProduct].amount--
-            else if (atte == '+')product[idProduct].amount++
+    if (e.target.classList.contains('main__product-btn')) {
+        const attr = e.target.getAttribute('data-symbol')
+        const parent = e.target.closest('.main__product')
+        const idProduct = parent.getAttribute('id')
+
+
+        if(attr == '-') {
+            product[idProduct].amount--
+        }else if (attr == '+') {
+            product[idProduct].amount++
         }
     }
-}) 
+})
