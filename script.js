@@ -33,7 +33,9 @@ const product = {
 
 const basketBtn = document.querySelector('.addCart'),
     basketModal = document.querySelector('.receipt'),
-    basketClaseModal = document.querySelector('.receipt__window-btn')
+    basketClaseModal = document.querySelector('.receipt__window-btn'),
+    totalPriceBasket = document.querySelector('.main__product-price'),
+    basketChekList = document.querySelector('.receipt__window-out')
 
 
 basketBtn.addEventListener('click', () => {
@@ -91,12 +93,46 @@ window.addEventListener('click', (e) => {
         const attr = e.target.getAttribute('data-symbol')
         const parent = e.target.closest('.main__product')
         const idProduct = parent.getAttribute('id')
+        const productAmount = parent.querySelector('.main__product-num', )
 
 
-        if(attr == '-') {
-            product[idProduct].amount--
-        }else if (attr == '+') {
-            product[idProduct].amount++
+        if (parent) {
+            if (attr == '+') product[idProduct].amount++
+            else if (attr == '-' && product[idProduct].amount > 0) {
+                product[idProduct].amount--
+            }
+            productAmount.innerHTML = product[idProduct].amount
+            totalPriceBasket.innerHTML = `${totalSum()} сум`
         }
     }
 })
+
+/* basketBtn.forEach(btn => {
+    btn.addEventListener('click', function () {
+        addBurger(this)
+    })
+}) */
+ 
+/* function addBurger(btn) {
+    let parent = btn.closest('.main__product')
+    console.log(parent);
+} */
+
+
+
+/* basketChekList.innerHTML = ''
+productArray.forEach(item => {
+    basketChekList.innerHTML +=
+})
+
+function cardItemBuerger(obj) {
+    const {
+        name,
+        price,
+        amount,
+        img
+    } = obj
+
+   
+
+} */
