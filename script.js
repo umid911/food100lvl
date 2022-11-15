@@ -4,8 +4,12 @@ const product = {
         price: 10000,
         img: 'images/product2.jpg',
         amount: 0,
+        callores: 400,
         get totalSum() {
             return this.price * this.amount;
+        },
+        get totalKcall() {
+            return this.amount * this.callores
         }
 
     },
@@ -15,8 +19,12 @@ const product = {
         price: 20500,
         img: 'images/product1.jpg',
         amount: 0,
+        callores: 500,
         get totalSum() {
             return this.price * this.amount;
+        },
+        get totalKcall() {
+            return this.amount * this.callores
         }
     },
 
@@ -25,8 +33,12 @@ const product = {
         price: 31900,
         img: 'images/product3.jpg',
         amount: 0,
+        callores: 700,
         get totalSum() {
             return this.price * this.amount;
+        },
+        get totalKcall() {
+            return this.amount * this.callores
         }
     }
 }
@@ -34,8 +46,8 @@ const product = {
 const basketBtn = document.querySelector('.addCart'),
     basketModal = document.querySelector('.receipt'),
     basketClaseModal = document.querySelector('.receipt__window-btn'),
-    totalPriceBasket = document.querySelector('.main__product-price'),
     basketChekList = document.querySelector('.receipt__window-out')
+    
 
 
 basketBtn.addEventListener('click', () => {
@@ -92,6 +104,8 @@ window.addEventListener('click', (e) => {
     if (e.target.classList.contains('main__product-btn')) {
         const attr = e.target.getAttribute('data-symbol')
         const parent = e.target.closest('.main__product')
+        const totalPrice = parent.querySelector('.main__product-price')
+        const totalCall = parent.querySelector('.main__product-call')
         const idProduct = parent.getAttribute('id')
         const productAmount = parent.querySelector('.main__product-num', )
 
@@ -102,37 +116,65 @@ window.addEventListener('click', (e) => {
                 product[idProduct].amount--
             }
             productAmount.innerHTML = product[idProduct].amount
-            totalPriceBasket.innerHTML = `${totalSum()} сум`
+            totalPrice.innerHTML = `${totalSum()} сум`
+            totalCall.innerHTML = `${totalKcall()}`
+
         }
     }
 })
 
-/* basketBtn.forEach(btn => {
-    btn.addEventListener('click', function () {
-        addBurger(this)
+function renderBasket() {
+    const productArrey = []
+    
+    basketCheckList.innerHTML = ''
+    productArray.forEach(item => {
+        basketCheckList.innerHTML += cardItemBurger(item)
     })
-}) */
- 
-/* function addBurger(btn) {
-    let parent = btn.closest('.main__product')
-    console.log(parent);
-} */
+    let allCount = totalCount()
+    if (allCount) {
+        basketCount.classList.add('active')
+        basketCount.innerHTML = allCount
+    } else {
+        basketCount.classList.remove('active')
+    }
+
+    totalPriceBasket.innerHTML = `${totalSum()} сум`
 
 
+}
+function totalCount() {
+    let total = 0
+    for (const key in product) {
+        total += product[key].amount
+    }
+    return total
+}
 
-/* basketChekList.innerHTML = ''
-productArray.forEach(item => {
-    basketChekList.innerHTML +=
-})
+function totalSum() {
+    let total = 0
+    for (const key in product) {
+        total += product[key].totalSum
+    }
+    return total
+}
 
-function cardItemBuerger(obj) {
-    const {
-        name,
-        price,
-        amount,
-        img
-    } = obj
 
-   
-
-} */
+function cardItemBurger(obj) {
+    const { name, price, amount, img } = obj
+    return `
+    <div class="main__product-number">
+        <div class="main__product-label">
+            <img src="${img}" alt="${name}" class="main__product-numbertImage">
+            <div class="wrapper__navbar-infoSub">
+                <p class="main__product-number">${name}</p>
+                <p class="main__product-many">${price} сум</p>
+            </div>
+        </div>
+        <div main__product-extraProduct" id="${name.toLowerCase()}_card">
+           
+            <output class="wrapper__navbar-count">${amount}</output>
+           
+        </div>
+    </div>
+`
+}
