@@ -116,15 +116,21 @@ window.addEventListener('click', (e) => {
                 product[idProduct].amount--
             }
             productAmount.innerHTML = product[idProduct].amount
-            totalPrice.innerHTML = `${totalSum()} сум`
-            totalCall.innerHTML = `${totalKcall()}`
+            totalPrice.innerHTML = `${product[idProduct].totalSum} сум`
+            totalCall.innerHTML = `${product[idProduct].totalKcall}`
 
         }
     }
 })
 
 function renderBasket() {
-    const productArrey = []
+    const productArray = []
+
+    for(const key in product) {
+        if(product[key].amount) {
+          productArray.push(product[key])
+        }
+    }
     
     basketCheckList.innerHTML = ''
     productArray.forEach(item => {
